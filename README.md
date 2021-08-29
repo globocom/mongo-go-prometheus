@@ -2,7 +2,7 @@
 
 <p>
   <img src="https://img.shields.io/github/workflow/status/globocom/mongo-go-prometheus/Go?style=flat-square">
-  <a href="https://github.com/globocom/mongo-go-prometheus/blob/master/LICENSE">
+  <a href="https://github.com/globocom/mongo-go-prometheus/blob/main/LICENSE">
     <img src="https://img.shields.io/github/license/globocom/mongo-go-prometheus?color=blue&style=flat-square">
   </a>
   <img src="https://img.shields.io/github/go-mod/go-version/globocom/mongo-go-prometheus?style=flat-square">
