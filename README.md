@@ -35,7 +35,7 @@ func main() {
 		mongoprom.WithDurationBuckets([]float64{.001, .005, .01}),
 	)
 	opts := options.Client().
-		ApplyURI("mongodb://localhost:27100").
+		ApplyURI("mongodb://localhost:27019").
 		SetMonitor(monitor)
 
 	client, err := mongo.Connect(context.TODO(), opts)
