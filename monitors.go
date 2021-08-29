@@ -12,6 +12,13 @@ var (
 	labelNames = []string{"instance", "command"}
 )
 
+// NewCommandMonitor creates a event.CommandMonitor that exports metrics of Mongo commands.
+// It also registers Prometheus collectors.
+//
+// The following metrics are exported:
+//
+// - Histogram of command duration.
+// - Counter of command errors.
 func NewCommandMonitor(opts ...Option) *event.CommandMonitor {
 	options := DefaultOptions()
 	options.Merge(opts...)

@@ -1,18 +1,20 @@
 package mongoprom
 
 type (
-	Options struct{
-		InstanceName string
-		Namespace string
+	// Options represents options to customize the exported metrics.
+	Options struct {
+		InstanceName    string
+		Namespace       string
 		DurationBuckets []float64
 	}
-	Option  func(*Options)
+	Option func(*Options)
 )
 
+// DefaultOptions returns the default options.
 func DefaultOptions() *Options {
 	return &Options{
-		InstanceName: "unnamed",
-		Namespace: "",
+		InstanceName:    "unnamed",
+		Namespace:       "",
 		DurationBuckets: []float64{.001, .005, .01, .025, .05, .1, .25, .5, 1},
 	}
 }
@@ -23,17 +25,21 @@ func (options *Options) Merge(opts ...Option) {
 	}
 }
 
+// WithInstanceName sets the name of the MongoDB instance.
 func WithInstanceName(name string) Option {
 	return func(options *Options) {
 		options.InstanceName = name
 	}
 }
+
+// WithNamespace sets the namespace of all metrics.
 func WithNamespace(namespace string) Option {
 	return func(options *Options) {
 		options.Namespace = namespace
 	}
 }
 
+// WithDurationBuckets sets the duration buckets of commands.
 func WithDurationBuckets(buckets []float64) Option {
 	return func(options *Options) {
 		options.DurationBuckets = buckets
