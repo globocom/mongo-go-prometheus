@@ -102,7 +102,6 @@ func NewPoolMonitor(opts ...PoolOption) *event.PoolMonitor {
 			}
 		}
 	}
-
 	return &event.PoolMonitor{
 		Event: func(poolEvent *event.PoolEvent) {
 			observePoolEvents(poolEvent)
