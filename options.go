@@ -10,6 +10,29 @@ type (
 	Option func(*Options)
 )
 
+type (
+	// PoolOptions represents options to customize the exported metrics.
+	PoolOptions struct {
+		InstanceName string
+		Namespace    string
+	}
+	PoolOption func(*PoolOptions)
+)
+
+// DefaultPoolOptions returns the default options.
+func DefaultPoolOptions() *PoolOptions {
+	return &PoolOptions{
+		InstanceName: "unnamed",
+		Namespace:    "default",
+	}
+}
+
+func (options *PoolOptions) Merge(opts ...PoolOption) {
+	for _, opt := range opts {
+		opt(options)
+	}
+}
+
 // DefaultOptions returns the default options.
 func DefaultOptions() *Options {
 	return &Options{
@@ -22,6 +45,20 @@ func DefaultOptions() *Options {
 func (options *Options) Merge(opts ...Option) {
 	for _, opt := range opts {
 		opt(options)
+	}
+}
+
+// PoolWithInstanceName sets the name of the MongoDB instance.
+func PoolWithInstanceName(name string) PoolOption {
+	return func(options *PoolOptions) {
+		options.InstanceName = name
+	}
+}
+
+// PoolWithNamespace sets the namespace of all metrics.
+func PoolWithNamespace(namespace string) PoolOption {
+	return func(options *PoolOptions) {
+		options.Namespace = namespace
 	}
 }
 

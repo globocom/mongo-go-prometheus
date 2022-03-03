@@ -34,9 +34,15 @@ func main() {
 		mongoprom.WithNamespace("my_namespace"),
 		mongoprom.WithDurationBuckets([]float64{.001, .005, .01}),
 	)
+
+	poolMonitor := mongoprom.NewPoolMonitor(
+		mongoprom.PoolWithInstanceName("database"),
+		mongoprom.PoolWithNamespace("my_namespace"),
+	)
+	
 	opts := options.Client().
 		ApplyURI("mongodb://localhost:27019").
-		SetMonitor(monitor)
+		SetMonitor(monitor).SetPoolMonitor(poolMonitor)
 
 	client, err := mongo.Connect(context.TODO(), opts)
 	if err != nil {
@@ -52,8 +58,12 @@ func main() {
 The command monitor exports the following metrics:
 
 - Commands:
-	- Histogram of commands: `mongo_commands{instance="db", command="insert"}`
-	- Counter of errors: `mongo_command_errors{instance="db", command="update"}`
+    - Histogram of commands: `mongo_commands{instance="db", command="insert"}`
+    - Counter of errors: `mongo_command_errors{instance="db", command="update"}`
+- Pool:
+  - Max number of connections allowed in Connection Pool: `mongodb_connection_pool_max{instance="db"}`
+  - Min number of connections allowed in Connection Pool: `mongodb_connection_pool_min{instance="db"}`
+  - Actual connections in usage: `mongodb_connection_pool_usage{instance="db"}` 
 
 ## API stability
 
