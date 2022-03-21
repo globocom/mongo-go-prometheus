@@ -37,8 +37,8 @@ func NewCommandMonitor(opts ...Option) *event.CommandMonitor {
 	}, labelNames)).(*prometheus.CounterVec)
 
 	observeDuration := func(evt event.CommandFinishedEvent) {
-		duration := time.Duration(evt.DurationNanos) / time.Second
-		commands.WithLabelValues(options.InstanceName, evt.CommandName).Observe(float64(duration))
+		duration := time.Duration(evt.DurationNanos).Seconds()
+		commands.WithLabelValues(options.InstanceName, evt.CommandName).Observe(duration)
 	}
 
 	return &event.CommandMonitor{
